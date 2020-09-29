@@ -34,15 +34,15 @@ public class ISBNHashTableTester {
 	/**
 	 * tests that the code properly hashes the ISBN number and stores the values
 	 * 
-	 * @return
+	 * @return true if it is correct and false otherwise
 	 */
 	public static boolean hashValueReturnTester() {
 		HashTableMap<String, CourseReading> table = Wrangle.readCSV("src/textbook_file.csv");
-		Wrangle.setISBN("898989899"); // in final product, the param would come from user input
-		Wrangle.setTitle("The Lorax"); // *see above comment*
-		Wrangle.setCourse("Lit Trans 245"); // *see above comment*
-		table.put(Wrangle.key(), Wrangle.value()); // use staic methods to get the key and value passed
-		if (!table.get("898989899").getBookTitle().equals("The Lorax")) {
+		Wrangle.setISBN("898989899"); // creates an ISBN
+		Wrangle.setTitle("The Lorax");
+		Wrangle.setCourse("Lit Trans 245");
+		table.put(Wrangle.key(), Wrangle.value()); // adds key to table
+		if (!table.get("898989899").getBookTitle().equals("The Lorax")) {// tests the program with if statement
 			System.out.println("The prgoram should retrun (The Lorax) as the book title.");
 			return false;
 		}
@@ -53,15 +53,15 @@ public class ISBNHashTableTester {
 	/**
 	 * checks that the CSV file is imported with the correct data
 	 * 
-	 * @return
+	 * @return true if it is correct and false otherwise
 	 */
 	public static boolean CSVinfoReturnTester() {
-		HashTableMap<String, CourseReading> table = Wrangle.readCSV("src/textbook_file.csv");
-		if (table.size() != 1628) {
+		HashTableMap<String, CourseReading> table = Wrangle.readCSV("src/textbook_file.csv");// creates hash table
+		if (table.size() != 1628) {// checks that the size is correct
 			System.out.println("The table should contain 1616 ISBNs and only contains " + table.size() + ".");
 			return false;
 		}
-		if (!table.get("'0072467509'").getBookTitle()
+		if (!table.get("'0072467509'").getBookTitle()// checks that the title is correct
 				.equalsIgnoreCase("Introduction to Computing Systems: from bits and gates to C and beyond")
 				&& !table.get("'0130084514'").getBookTitle().equalsIgnoreCase("Linear Algebra")) {
 			System.out.println(
@@ -75,14 +75,18 @@ public class ISBNHashTableTester {
 	 * checks that the program returns the correct information called with the ISBN
 	 * key
 	 * 
-	 * @return
+	 * @return true if it is correct and false otherwise
 	 */
 	public static boolean valueReturnTester() {
-		HashTableMap<String, CourseReading> table = Wrangle.readCSV("src/textbook_file.csv");
-		if (!table.get("'9780131103627'").getBookTitle().equalsIgnoreCase("The C Programming Language")
+		HashTableMap<String, CourseReading> table = Wrangle.readCSV("src/textbook_file.csv");// creates hash table
+		if (!table.get("'9780131103627'").getBookTitle().equalsIgnoreCase("The C Programming Language")// checks that
+																										// all values
+																										// return
+																										// correctly
 				&& !table.get("'9780131103627'").getCourse().equalsIgnoreCase("COMP SCI 537 Intro to Operating Systems")
 				&& !table.get("'9780131103627'").getISBN().equalsIgnoreCase("'9780131103627'")) {
-			System.out.println("The program does return the correct course info(Book, course, or ISBN)");
+			System.out.println("The program does return the correct course info(Book, course, or ISBN)");// prints if
+																											// false
 			return false;
 		}
 		return true;
@@ -93,16 +97,17 @@ public class ISBNHashTableTester {
 	 * checks that the program returns with a statement saying that no class exists
 	 * with that ISBN key
 	 * 
-	 * @return
+	 * @return true if it is correct and false otherwise
 	 */
 	public static boolean noSuchISBNTester() {
-		HashTableMap<String, CourseReading> table = Wrangle.readCSV("src/textbook_file.csv");
+		HashTableMap<String, CourseReading> table = Wrangle.readCSV("src/textbook_file.csv");// creates hash table
 		try {
-			table.get("0101010101");
-		} catch (NoSuchElementException e) {
+			table.get("0101010101");// tries to get ISBN
+		} catch (NoSuchElementException e) {// spits out exception that it dosnt exist
 			return true;
 		}
-		System.out.println("The program should have returned a NoSuchElementException");
+		System.out.println("The program should have returned a NoSuchElementException");// prints if the ISBN returns
+																						// when it shouldnt
 		return false;
 
 	}
@@ -111,50 +116,54 @@ public class ISBNHashTableTester {
 	 * tests that the program remove an ISBN that has been hashed and is properly
 	 * removed.
 	 * 
-	 * @return
+	 * @return true if it is correct and false otherwise
 	 */
 	public static boolean removeISBNTester() {
-		HashTableMap<String, CourseReading> table = Wrangle.readCSV("src/textbook_file.csv");
-		table.remove("'0072467509'");
+		HashTableMap<String, CourseReading> table = Wrangle.readCSV("src/textbook_file.csv");// creates hash table
+		table.remove("'0072467509'");// removes the ISBN
 		try {
-			table.get("'0072467509'");
+			table.get("'0072467509'");// trys to get the removed ISBN
 		} catch (NoSuchElementException e) {
 			return true;
 		}
-		System.out.println("The program did not remove the ISBN('0072467509') from the hashTable");
+		System.out.println("The program did not remove the ISBN('0072467509') from the hashTable");// prints if false
 		return false;
 	}
 
 	/**
 	 * tests that the program does not remove a ISBN thats not in the hashTable.
 	 * 
-	 * @return
+	 * @return true if it is correct and false otherwise
 	 */
 	public static boolean removeISBNTesterBlank() {
-		HashTableMap<String, CourseReading> table = Wrangle.readCSV("src/textbook_file.csv");
-		if (table.remove("'123'") != null) {
-			System.out.println("The program should not have removed the ISBN('123') from the hashTable");
+		HashTableMap<String, CourseReading> table = Wrangle.readCSV("src/textbook_file.csv");// creates hash table
+		if (table.remove("'123'") != null) {// tries to remove the ISBN that dosnt exist
+			System.out.println("The program should not have removed the ISBN('123') from the hashTable");// prints if it
+																											// removes
 			return false;
 		}
 		return true;
 	}
 
 	/**
-	 * tests that the program can create a courseReading and change its values and return it after being added to the table.
+	 * tests that the program can create a courseReading and change its values and
+	 * return it after being added to the table.
 	 * 
-	 * @return
+	 * @return true if it is correct and false otherwise
 	 */
 	public static boolean createCourseReadingTester() {
-		HashTableMap<String, CourseReading> table = Wrangle.readCSV("src/textbook_file.csv");
-		CourseReading temp = new CourseReading();
-		temp.setBookTitle("Always Sunny");
-		temp.setCourse("LIT TRANS 111");
-		temp.setISBN("'12345'");
-		table.put("'12345'", temp);
-		if (!table.get("'12345'").getBookTitle().equalsIgnoreCase("Always Sunny")
+		HashTableMap<String, CourseReading> table = Wrangle.readCSV("src/textbook_file.csv");// creates hash table
+		CourseReading temp = new CourseReading();// creates an object
+		temp.setBookTitle("Always Sunny");// modifies the values
+		temp.setCourse("LIT TRANS 111");// modifies the values
+		temp.setISBN("'12345'");// modifies the values
+		table.put("'12345'", temp);// modifies the values in the table
+		if (!table.get("'12345'").getBookTitle().equalsIgnoreCase("Always Sunny")// tests the values were added
+																					// correctly
 				&& !table.get("'12345'").getCourse().equalsIgnoreCase("LIT TRANS 111")
 				&& !table.get("'12345'").getISBN().equalsIgnoreCase("'12345'")) {
-			System.out.println("The prgoram did not set/return the correct info from the courseReading");
+			System.out.println("The prgoram did not set/return the correct info from the courseReading");// prints if
+																											// false
 			return false;
 		}
 		return true;
@@ -164,35 +173,39 @@ public class ISBNHashTableTester {
 	/**
 	 * tests that the program can add a new ISBN to the hashTable.
 	 * 
-	 * @return
+	 * @return true if it is correct and false otherwise
 	 */
 	public static boolean setISBNTester() {
-		HashTableMap<String, CourseReading> table = Wrangle.readCSV("src/textbook_file.csv");
-		CourseReading temp = new CourseReading();
+		HashTableMap<String, CourseReading> table = Wrangle.readCSV("src/textbook_file.csv");// creates hash table
+		CourseReading temp = new CourseReading();// creates object
 		temp.setBookTitle("Always Sunny");
 		temp.setCourse("LIT TRANS 111");
 		temp.setISBN("'12345'");
 		table.put("'12345'", temp);
 		try {
-			table.get("'12345'");
+			table.get("'12345'");// tries to get ISBN
 		} catch (NoSuchElementException e) {
-			System.out.println("The System should have added and retried the ISBN(12345), but did not.");
+			System.out.println("The System should have added and retried the ISBN(12345), but did not.");// prints if it
+																											// throws an
+																											// error
 			return false;
 		}
 		return true;
 
 	}
+
 	/**
 	 * tests that the program can create a new ISBN with wrangle.
 	 * 
-	 * @return
+	 * @return true if it is correct and false otherwise
 	 */
 	public static boolean setWrangleTester() {
-        Wrangle.setISBN("'12345'");
-        if(!Wrangle.key().equals("'12345'")) {
-        	System.out.println("The Wrangle class did not set a new ISBN properly");
-            return false;
-        }
-        return true;
-    }
+		Wrangle.setISBN("'12345'");// addes an ISBN in wrangler()
+		if (!Wrangle.key().equals("'12345'")) {// tests that wrangler method worked
+			System.out.println("The Wrangle class did not set a new ISBN properly");// prints if false
+			return false;
+		}
+		return true;
+	}
 }
+
