@@ -15,7 +15,7 @@ public class FrontEnd {
 		String command = null;
 		Scanner scnr = new Scanner(System.in);
 		String prompt = "Please input a command. To see the commands, type c.";
-		CourseReadingBackEnd backEndData = null;
+		CourseReadingBackEnd2 backEndData = null;
 
 		// this is where you decide to create a new database or use the default
 		System.out.println("Now running Check Your Texts. Would you like create a new database or import the default database?"
@@ -24,7 +24,7 @@ public class FrontEnd {
 		boolean pickedDatabase = false;
 		while (pickedDatabase == false) {
 			if (command.equals("d")) {
-				backEndData = new CourseReadingBackEnd("src/textbook_file.csv");
+				backEndData = new CourseReadingBackEnd2("src/textbook_file.csv");
 				if (backEndData != null) {
 					pickedDatabase = true;
 				}
