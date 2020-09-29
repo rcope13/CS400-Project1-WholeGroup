@@ -1,0 +1,90 @@
+// --== CS400 File Header Information ==--
+// Name: <Shutong Lin>
+// Email: <slin326@wisc.edu>
+// Team: <BB>
+// Role: <Data Wrangler 1>
+// TA: <Brianna (Bri) Cochran>
+// Lecturer: <Gary Dahl>
+// Notes to Grader: <optional extra notes>
+//--------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+
+
+public class WriteCSV {
+	/**
+	 * CSV first line header
+	 */
+	private static final String CSVHEADER="ISBN,bookTitle,course";
+	/**
+	 * csv file path
+	 */
+	private String csvFilePath;
+
+	public WriteCSV() {
+	}
+
+	public WriteCSV(String csvFilePath) {
+		this.csvFilePath = csvFilePath;
+	}
+
+	/**
+	 * @param csvLine : Array of csvline and line must be the value "isbnValue,bookTitleValue,courseValue"
+	 * @param append : whether append data to csv file , true : append, false : cover
+	 */
+	public void batchWrite(String[] csvLine, boolean append) {
+		this.batchWrite(Arrays.asList(csvLine).stream().map(line -> new CourseReading(line.split(",")))
+				.collect(Collectors.toList()), append);
+	}
+
+	/**
+	 * @param data : list of CourseReading
+	 * @param append : whether append data to csv file , true : append, false : cover
+	 */
+	public void batchWrite(List<CourseReading> data, boolean append) {
+		FileWriter fw = null;
+		try {
+			fw = new FileWriter(new File(this.csvFilePath), append);
+			if(!append)
+				fw.write(CSVHEADER+"\n");
+			for (CourseReading info : data) {
+				fw.write(info.toCSVContent() + "\n");
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			if (fw != null) {
+				try {
+					fw.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+
+				}
+			}
+		}
+
+	}
+
+	/**
+	 * @param ISBN
+	 * @param bookTitle
+	 * @param course
+	 * @param append  : whether append data to csv file , true : append, false : cover
+	 */
+	public void write(String ISBN, String bookTitle, String course, boolean append) {
+		this.write(new CourseReading(ISBN, bookTitle, course), append);
+	}
+
+	/**
+	 * write one object to csv file
+	 * @param info 
+	 * @param append
+	 */
+	public void write(CourseReading info, boolean append) {
+		this.batchWrite(Arrays.asList(info), append);
+	}
+}
