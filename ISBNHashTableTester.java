@@ -39,13 +39,10 @@ public class ISBNHashTableTester {
         return false;
     }
 
-    public static boolean removeTest2() { //Removing an unknown ISBN should return null (see CourseReading.remove()
+    public static boolean removeTest2() { //Removing an unknown ISBN should return null (see CourseReading.remove()). Similar to removeTest1.
   
         HashTableMap hashTable = new HashTableMap(); 
-        
-        hashTable.put("7409", "CS 2001");
-        
-        
+
         if(hashTable.remove("7409") == null) {
             return true;
         }
@@ -62,8 +59,8 @@ public class ISBNHashTableTester {
         wrangle.setISBN("7964");
         wrangle.setTitle("Advanced Procastination");
         wrangle.setCourse("Procrastination 211");
-       
-        if(wrangle.value().toString().equals("CourseReading@2c7b84de")) {
+
+        if(wrangle.value().toString().equals("CourseReading@76ed5528")) {
             return true;
         }
         return false;
@@ -107,8 +104,8 @@ public class ISBNHashTableTester {
     
    public static boolean testReadCSV() { //Tests if the returned address when the CSV is called matches that of the HashTableMap class. This ensures the CSV has relation to HashTableMap.
        Wrangle wrangle = new Wrangle();
-       
-       if(wrangle.readCSV("src/textbook_file.csv").toString().equals("HashTableMap@6b884d57")) {
+
+       if(wrangle.readCSV("src/textbook_file.csv").toString().equals("HashTableMap@1be6f5c3")) {
            return true;
        }
         return false;
