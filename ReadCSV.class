@@ -1,0 +1,46 @@
+// --== CS400 File Header Information ==--
+// Name: <Shutong Lin>
+// Email: <slin326@wisc.edu>
+// Team: <BB>
+// Role: <Data Wrangler 1>
+// TA: <Brianna (Bri) Cochran>
+// Lecturer: <Gary Dahl>
+// Notes to Grader: <optional extra notes>
+//----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.List;
+import java.util.stream.Collectors;
+
+/**
+ * Reader of csv file
+ */
+public class ReadCSV {
+	/**
+	 *  csv file path
+	 */
+	private String csvFilePath;
+	public ReadCSV() {
+	}
+	public ReadCSV(String csvFilePath) {
+		this.csvFilePath=csvFilePath;
+	}
+	
+	public List<CourseReading> read()throws IOException{
+		return this.read(this.csvFilePath);
+	}
+
+	/**
+	 * @param path csv file path 
+	 * @return
+	 * @throws IOException
+	 */
+	public List<CourseReading> read(String path)throws IOException{
+		return  Files.readAllLines(Paths.get(path)).stream().skip(1).map(line -> {
+			String[] fs = line.split(",");
+			return new CourseReading(fs);
+		}).collect(Collectors.toList());
+	}
+	
+}
