@@ -10,8 +10,8 @@
 import java.util.Scanner;
 
 /**
- * This class serves the purpose of acting as the interface that the user
- * has access to for our program.
+ * This class serves the purpose of acting as the interface that the user has
+ * access to for our program.
  * 
  * @author rlcope
  *
@@ -21,32 +21,45 @@ public class FrontEnd {
 	public static Scanner scnr = new Scanner(System.in); // takes input from the user
 	public static String prompt = "Please input a command. To see the commands, type c.";
 	public static CourseReadingBackEnd2 backEndData = null; // the object that contains the hashtable and backend
-																// commands
+															// commands
 
 	/**
 	 * This method initializes an instance of backEndData with either a new, empty
 	 * hashtable, or a hashtable populated with values from a CSV.
 	 */
 	public static void initializeDatabase() {
-		System.out.println(
-				"Now running Check Your Texts. Would you like create a new database or import the default database?"
-						+ " To create a new database, input n, and to use the default database, input d.");
+		System.out.println("Now running Check Your Texts. Would you like create a new database or import a database?"
+				+ " To create a new database, input n, and to import a database, input i.");
 		command = scnr.nextLine().toLowerCase().trim();
 		boolean pickedDatabase = false;
+
+		// makes sure that backEndData is initialized with something that isn't null
 		while (pickedDatabase == false) {
-			if (command.equals("d")) {
-				backEndData = new CourseReadingBackEnd2("src/textbook_file.csv");
+
+			// allows user to specify location of csv file to scan and import into
+			// backEndData
+			if (command.equals("i")) {
+				System.out.println("Please input the file path of the csv file you would like to scan for data.");
+				String filePath = scnr.nextLine().trim();
+				backEndData = new CourseReadingBackEnd2(filePath);
 				if (backEndData != null) {
 					pickedDatabase = true;
 				}
+				if (backEndData == null) {
+					System.out.println("Invalid file path. Please start over.");
+				}
 			}
+
+			// initializes backEndData with an empty hashtable
 			if (command.equals("n")) {
 				backEndData = new CourseReadingBackEnd2();
 				if (backEndData != null) {
 					pickedDatabase = true;
 				}
 			}
-			if ((!command.equals("n")) && (!command.equals("d"))) {
+
+			// user input an invalid command
+			if ((!command.equals("n")) && (!command.equals("i"))) {
 				System.out.println("Please input a valid command.");
 				command = scnr.nextLine().toLowerCase().trim();
 			}
