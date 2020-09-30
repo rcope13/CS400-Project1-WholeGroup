@@ -6,7 +6,9 @@
 // Role: Front End Developer
 // TA: Brianna Cochran
 // Lecturer: Gary Dahl
-// Notes to Grader: <optional extra notes>
+// Notes to Grader: Encountered an error on line 45. The backEndData will never return null as long the CourseReadingBackEnd2 constructor is called,
+//                  because it is always going to return a CourseReadingBackEnd2 reference, which contains a null hashtable. This was 
+//					accounted for before the Back End Developer submitted his code, but the addition of their code changed how this test works. 
 import java.util.Scanner;
 
 /**
